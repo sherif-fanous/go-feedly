@@ -23,7 +23,7 @@ func newProfileService(sling *sling.Sling) *ProfileService {
 // Profile is a Feedly user profile.
 type Profile struct {
 	Client              *string    `json:"client,omitempty"`
-	Create              *time.Time `json:"created,omitempty"`
+	Created             *time.Time `json:"created,omitempty"`
 	DropboxConnected    *bool      `json:"dropboxConnected,omitempty"`
 	Email               *string    `json:"email"`
 	EvernoteConnected   *bool      `json:"evernoteConnected,omitempty"`
