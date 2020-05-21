@@ -200,7 +200,7 @@ func (s *CollectionService) Details(collectionID string) (*CollectionDetailRespo
 // CollectionListOptionalParams are the optional parameters for CollectionService.List.
 type CollectionListOptionalParams struct {
 	WithEnterprise *bool `url:"withEnterprise,omitempty"`
-	WithStatus     *bool `url:"withStats,omitempty"`
+	WithStats      *bool `url:"withStats,omitempty"`
 }
 
 // CollectionListResponse represents the response from CollectionService.List.
