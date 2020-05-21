@@ -74,7 +74,6 @@ func (s *BoardService) AddEntries(BoardIDs []string, entryIDs []string) (*http.R
 // BoardCreateOptionalParams are the optional parameters for BoardService.Create.
 type BoardCreateOptionalParams struct {
 	Description    *string `json:"description,omitempty"`
-	Feeds          []Feed  `json:"feeds,omitempty"`
 	ID             *string `json:"id,omitempty"`
 	IsPublic       *bool   `json:"isPublic,omitempty"`
 	ShowHighlights *bool   `json:"showHighlights,omitempty"`
