@@ -161,7 +161,7 @@ func (s *CollectionService) DeleteFeed(collectionID string, feedID string, optio
 // CollectionDeleteMultipleFeedsOptionalParams are the optional parameters for CollectionService.DeleteMultipleFeeds.
 type CollectionDeleteMultipleFeedsOptionalParams CollectionDeleteFeedOptionalParams
 
-// DeleteMultipleFeeds removes one or more feeds from an existing collection.
+// DeleteMultipleFeeds deletes one or more feeds from an existing collection.
 func (s *CollectionService) DeleteMultipleFeeds(collectionID string, feedIDs []string, optionalParams *CollectionDeleteFeedOptionalParams) (*http.Response, error) {
 	if optionalParams == nil {
 		optionalParams = &CollectionDeleteFeedOptionalParams{}
