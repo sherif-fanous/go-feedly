@@ -21,8 +21,8 @@ func newMixService(sling *sling.Sling) *MixService {
 	}
 }
 
-// MixOptionalParams are the optional parameters for MixService.MostEngaging.
-type MixOptionalParams struct {
+// MixMostEngagingOptionalParams are the optional parameters for MixService.MostEngaging.
+type MixMostEngagingOptionalParams struct {
 	Backfill   *bool      `url:"backfill,omitempty"`
 	Count      *int       `url:"count,omitempty"`
 	Hours      *int       `url:"hours,omitempty"`
@@ -37,9 +37,9 @@ type MixMostEngagingResponse struct {
 }
 
 // MostEngaging returns a mix of the most engaging content available in a stream.
-func (s *MixService) MostEngaging(streamID string, optionalParams *MixOptionalParams) (*MixMostEngagingResponse, *http.Response, error) {
+func (s *MixService) MostEngaging(streamID string, optionalParams *MixMostEngagingOptionalParams) (*MixMostEngagingResponse, *http.Response, error) {
 	if optionalParams == nil {
-		optionalParams = &MixOptionalParams{}
+		optionalParams = &MixMostEngagingOptionalParams{}
 	}
 
 	encodedResponse := make(map[string]interface{})
