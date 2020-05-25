@@ -56,8 +56,8 @@ func (s *BoardService) AddEntry(BoardIDs []string, entryID string) (*http.Respon
 	return resp, relevantError(err, apiError)
 }
 
-// AddEntries adds one or more entries to one or more existing boards.
-func (s *BoardService) AddEntries(BoardIDs []string, entryIDs []string) (*http.Response, error) {
+// AddMultipleEntries adds one or more entries to one or more existing boards.
+func (s *BoardService) AddMultipleEntries(BoardIDs []string, entryIDs []string) (*http.Response, error) {
 	bodyJSON := &struct {
 		EntryIds []string `json:"entryIds,omitempty"`
 	}{
@@ -124,6 +124,59 @@ func (s *BoardService) Delete(boardIDs []string) (*http.Response, error) {
 	return resp, relevantError(err, apiError)
 }
 
+// DeleteEntry deletes one entry from one or more existing boards.
+func (s *BoardService) DeleteEntry(BoardIDs []string, entryID string) (*http.Response, error) {
+	bodyJSON := &struct {
+		EntryID string `json:"entryId,omitempty"`
+	}{
+		EntryID: entryID,
+	}
+
+	apiError := new(APIError)
+
+	resp, err := s.sling.New().Delete("tags/"+url.PathEscape(strings.Join(BoardIDs, ","))).BodyJSON(bodyJSON).Receive(nil, apiError)
+
+	return resp, relevantError(err, apiError)
+}
+
+// DeleteMultipleEntries deletes one or more entries from one or more existing boards.
+func (s *BoardService) DeleteMultipleEntries(BoardIDs []string, entryIDs []string) (*http.Response, error) {
+	bodyJSON := &struct {
+		EntryIds []string `json:"entryIds,omitempty"`
+	}{
+		EntryIds: entryIDs,
+	}
+
+	apiError := new(APIError)
+
+	resp, err := s.sling.New().Delete("tags/"+url.PathEscape(strings.Join(BoardIDs, ","))).BodyJSON(bodyJSON).Receive(nil, apiError)
+
+	return resp, relevantError(err, apiError)
+}
+
+// BoardDetailResponse represents the response from BoardService.Details.
+type BoardDetailResponse struct {
+	Boards []Board `json:"boards"`
+}
+
+// Details returns details about a board.
+func (s *BoardService) Details(boardID string) (*BoardDetailResponse, *http.Response, error) {
+	encodedResponse := make([]map[string]interface{}, 0)
+	decodedResponse := new(BoardDetailResponse)
+	apiError := new(APIError)
+
+	resp, err := s.sling.New().Get("boards/"+url.PathEscape(boardID)).Receive(&encodedResponse, apiError)
+	if err := relevantError(err, apiError); err != nil {
+		return nil, resp, err
+	}
+
+	if err := mapstructure.Decode(encodedResponse, &decodedResponse.Boards); err != nil {
+		return nil, resp, err
+	}
+
+	return decodedResponse, resp, nil
+}
+
 // BoardListOptionalParams are the optional parameters for BoardService.List.
 type BoardListOptionalParams struct {
 	WithEnterprise *bool `url:"withEnterprise,omitempty"`
@@ -154,36 +207,6 @@ func (s *BoardService) List(optionalParams *BoardListOptionalParams) (*BoardList
 	}
 
 	return decodedResponse, resp, nil
-}
-
-// RemoveEntry removes one entry from one or more existing boards.
-func (s *BoardService) RemoveEntry(BoardIDs []string, entryID string) (*http.Response, error) {
-	bodyJSON := &struct {
-		EntryID string `json:"entryId,omitempty"`
-	}{
-		EntryID: entryID,
-	}
-
-	apiError := new(APIError)
-
-	resp, err := s.sling.New().Delete("tags/"+url.PathEscape(strings.Join(BoardIDs, ","))).BodyJSON(bodyJSON).Receive(nil, apiError)
-
-	return resp, relevantError(err, apiError)
-}
-
-// RemoveEntries removes one or more entries from one or more existing boards.
-func (s *BoardService) RemoveEntries(BoardIDs []string, entryIDs []string) (*http.Response, error) {
-	bodyJSON := &struct {
-		EntryIds []string `json:"entryIds,omitempty"`
-	}{
-		EntryIds: entryIDs,
-	}
-
-	apiError := new(APIError)
-
-	resp, err := s.sling.New().Delete("tags/"+url.PathEscape(strings.Join(BoardIDs, ","))).BodyJSON(bodyJSON).Receive(nil, apiError)
-
-	return resp, relevantError(err, apiError)
 }
 
 // BoardUpdateOptionalParams are the optional parameters for BoardService.Update.
