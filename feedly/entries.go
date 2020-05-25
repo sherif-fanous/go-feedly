@@ -116,6 +116,7 @@ type Entry struct {
 	Updated     *time.Time `json:"updated,omitempty"`
 	Visual      *struct {
 		ContentType    *string                `json:"contentType,omitempty"`
+		EdgeCacheURL   *string                `json:"edgeCacheUrl,omitempty"`
 		ExpirationDate *time.Time             `json:"expirationDate,omitempty"`
 		Height         *int                   `json:"height,omitempty"`
 		Processor      *string                `json:"processor,omitempty"`
@@ -124,12 +125,17 @@ type Entry struct {
 		UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 	} `json:"visual,omitempty"`
 	Webfeeds *struct {
+		AccentColor     *string                `json:"accentColor,omitempty"`
 		AnalyticsEngine *string                `json:"analyticsEngine,omitempty"`
 		AnalyticsID     *string                `json:"analyticsId,omitempty"`
+		CoverImage      *string                `json:"coverImage,omitempty"`
+		Icon            *string                `json:"icon,omitempty"`
 		Logo            *string                `json:"logo,omitempty"`
 		Partial         *bool                  `json:"partial,omitempty"`
+		Promotion       []string               `json:"promotion,omitempty"`
 		RelatedLayout   *string                `json:"relatedLayout,omitempty"`
 		RelatedTarget   *string                `json:"relatedTarget,omitempty"`
+		Wordmark        *string                `json:"wordmark,omitempty"`
 		UnmappedFields  map[string]interface{} `json:"-" mapstructure:",remain"`
 	} `json:"webfeeds,omitempty"`
 	UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
