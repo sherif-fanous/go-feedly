@@ -23,6 +23,9 @@ func newFeedService(sling *sling.Sling) *FeedService {
 
 // Feed is a Feedly feed.
 type Feed struct {
+	AdPlatform                  *string                `json:"adPlatform,omitempty"`
+	AdPosition                  *string                `json:"adPosition,omitempty"`
+	AdSlotID                    *string                `json:"adSlotId,omitempty"`
 	AccentColor                 *string                `json:"accentColor,omitempty"`
 	Added                       *time.Time             `json:"added,omitempty"`
 	AnalyticsEngine             *string                `json:"analyticsEngine,omitempty"`
