@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/sfanous/go-feedly.svg?branch=master)](https://travis-ci.com/sfanous/go-feedly)
 [![Go Report Card](https://goreportcard.com/badge/github.com/sfanous/go-feedly)](https://goreportcard.com/report/github.com/sfanous/go-feedly)
 [![Godoc](http://img.shields.io/badge/godoc-reference-blue.svg?style=flat)](https://godoc.org/github.com/sfanous/go-feedly)
 [![Release](https://img.shields.io/github/v/release/sfanous/go-feedly.svg?style=flat)](https://github.com/sfanous/go-feedly/releases/latest)
