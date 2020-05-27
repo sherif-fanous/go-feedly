@@ -4,4 +4,6 @@ go:
 script:
   - go test -v github.com/sfanous/go-feedly/feedly -args -cover "../testdata/covers/cover.gif" -cover "../testdata/covers/cover.jpg" -cover "../testdata/covers/cover.png"
 notifications:
-  email: change
+  email:
+    on_failure: always
+    on_success: never
