@@ -152,7 +152,9 @@ func testBoardServiceList(t *testing.T) {
 		for _, board := range listResponse.Boards {
 			board := board
 
-			responseBoards[strings.ToLower(*board.Label)] = &board
+			if _, ok := responseBoards[strings.ToLower(*board.Label)]; ok {
+				responseBoards[strings.ToLower(*board.Label)] = &board
+			}
 		}
 
 		testUnmappedFields(t, listResponse, "BoardListResponse")
