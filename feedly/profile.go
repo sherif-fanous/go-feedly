@@ -53,6 +53,7 @@ type Profile struct {
 	Picture              *string                `json:"picture,omitempty"`
 	PocketConnected      *bool                  `json:"pocketConnected,omitempty"`
 	Reader               *string                `json:"reader,omitempty"`
+	RedditConnected      *bool                  `json:"redditConnected,omitempty"`
 	RefPage              *string                `json:"refPage,omitempty"`
 	Source               *string                `json:"source,omitempty"`
 	Twitter              *string                `json:"twitter,omitempty"`
