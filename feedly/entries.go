@@ -81,6 +81,7 @@ type Entry struct {
 	Fingerprint *string  `json:"fingerprint,omitempty"`
 	ID          *string  `json:"id,omitempty"`
 	Keywords    []string `json:"keywords,omitempty"`
+	Language    *string  `json:"language,omitempty"`
 	Memes       []struct {
 		ID             *string                `json:"id,omitempty"`
 		Label          *string                `json:"label,omitempty"`
