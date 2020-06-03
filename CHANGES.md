@@ -1,6 +1,6 @@
 # Changes
 
-## v0.2.1
+## v0.2.2
 
 - Add Language field to Entry struct.
 
