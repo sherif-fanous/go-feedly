@@ -57,7 +57,11 @@ type Entry struct {
 		Direction      *string                `json:"direction,omitempty"`
 		UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 	} `json:"content,omitempty"`
-	Crawled   *time.Time
+	Crawled *time.Time `json:"crawled,omitempty"`
+	Created *struct {
+		Application *string `json:"application,omitempty"`
+		UserAgent   *string `json:"userAgent,omitempty"`
+	} `json:"created,omitempty"`
 	Enclosure []struct {
 		HRef           *string                `json:"href,omitempty"`
 		Height         *int                   `json:"height,omitempty"`
