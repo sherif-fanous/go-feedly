@@ -1,5 +1,9 @@
 # Changes
 
+## v0.2.4
+
+- Add AppledConnected field to Profile struct.
+
 ## v0.2.3
 
 - Add Created field to Entry struct.

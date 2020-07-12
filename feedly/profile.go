@@ -23,6 +23,7 @@ func newProfileService(sling *sling.Sling) *ProfileService {
 // Profile is a Feedly user profile.
 type Profile struct {
 	AnonymizedHash      *string    `json:"anonymizedHash,omitempty"`
+	AppleConnected      *bool      `json:"appleConnected,omitempty"`
 	Client              *string    `json:"client,omitempty"`
 	CohortGroups        []string   `json:"cohortGroups,omitempty"`
 	Cohorts             []string   `json:"cohorts,omitempty"`
