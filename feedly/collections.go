@@ -26,8 +26,9 @@ func newCollectionService(sling *sling.Sling) *CollectionService {
 // Collection is a Feedly collection.
 type Collection struct {
 	ACL []struct {
-		Scope  *string `json:"scope,omitempty"`
-		Target *string `json:"target,omitempty"`
+		Scope          *string                `json:"scope,omitempty"`
+		Target         *string                `json:"target,omitempty"`
+		UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 	}
 	Cover          *string                `json:"cover,omitempty"`
 	Created        *time.Time             `json:"created,omitempty"`
@@ -45,7 +46,8 @@ type Collection struct {
 
 // CollectionAddFeedResponse represents the response from CollectionService.AddFeed.
 type CollectionAddFeedResponse struct {
-	Feeds []Feed `json:"feeds"`
+	Feeds          []Feed                 `json:"feeds"`
+	UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 }
 
 // AddFeed adds a feed to an existing collection.
@@ -68,7 +70,8 @@ func (s *CollectionService) AddFeed(collectionID string, feed *Feed) (*Collectio
 
 // CollectionAddMultipleFeedsResponse represents the response from CollectionService.AddMultipleFeeds.
 type CollectionAddMultipleFeedsResponse struct {
-	Feeds []Feed `json:"feeds"`
+	Feeds          []Feed                 `json:"feeds"`
+	UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 }
 
 // AddMultipleFeeds adds a one or more feeds to an existing collection.
@@ -98,7 +101,8 @@ type CollectionCreateOptionalParams struct {
 
 // CollectionCreateResponse represents the response from CollectionService.Create.
 type CollectionCreateResponse struct {
-	Collections []Collection `json:"collections"`
+	Collections    []Collection           `json:"collections"`
+	UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 }
 
 // Create creates a new collection.
@@ -176,7 +180,8 @@ func (s *CollectionService) DeleteMultipleFeeds(collectionID string, feedIDs []s
 
 // CollectionDetailResponse represents the response from CollectionService.Details.
 type CollectionDetailResponse struct {
-	Collections []Collection `json:"collections"`
+	Collections    []Collection           `json:"collections"`
+	UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 }
 
 // Details returns details about a collection.
@@ -205,7 +210,8 @@ type CollectionListOptionalParams struct {
 
 // CollectionListResponse represents the response from CollectionService.List.
 type CollectionListResponse struct {
-	Collections []Collection `json:"collections"`
+	Collections    []Collection           `json:"collections"`
+	UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 }
 
 // List returns the list of collections.
@@ -240,7 +246,8 @@ type CollectionUpdateOptionalParams struct {
 
 // CollectionUpdateResponse represents the response from CollectionService.Update.
 type CollectionUpdateResponse struct {
-	Collections []Collection `json:"collections"`
+	Collections    []Collection           `json:"collections"`
+	UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 }
 
 // Update updates an existing collection.
@@ -275,7 +282,8 @@ func (s *CollectionService) Update(collectionID string, optionalParams *Collecti
 
 // CollectionUploadCoverImageResponse represents the response from CollectionService.UploadCoverImage.
 type CollectionUploadCoverImageResponse struct {
-	Collections []Collection `json:"collections"`
+	Collections    []Collection           `json:"collections"`
+	UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 }
 
 // UploadCoverImage uploads a new cover image for an existing collection.

@@ -82,7 +82,8 @@ type BoardCreateOptionalParams struct {
 
 // BoardCreateResponse represents the response from BoardService.Create.
 type BoardCreateResponse struct {
-	Boards []Board `json:"boards"`
+	Boards         []Board                `json:"boards"`
+	UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 }
 
 // Create creates a new board.
@@ -156,7 +157,8 @@ func (s *BoardService) DeleteMultipleEntries(BoardIDs []string, entryIDs []strin
 
 // BoardDetailResponse represents the response from BoardService.Details.
 type BoardDetailResponse struct {
-	Boards []Board `json:"boards"`
+	Boards         []Board                `json:"boards"`
+	UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 }
 
 // Details returns details about a board.
@@ -184,7 +186,8 @@ type BoardListOptionalParams struct {
 
 // BoardListResponse represents the response from BoardService.List.
 type BoardListResponse struct {
-	Boards []Board `json:"boards"`
+	Boards         []Board                `json:"boards"`
+	UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 }
 
 // List returns the list of boards.
@@ -221,7 +224,8 @@ type BoardUpdateOptionalParams struct {
 
 // BoardUpdateResponse represents the response from BoardService.Update.
 type BoardUpdateResponse struct {
-	Boards []Board `json:"boards"`
+	Boards         []Board                `json:"boards"`
+	UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 }
 
 // Update updates an existing board.
@@ -256,7 +260,8 @@ func (s *BoardService) Update(boardID string, optionalParams *BoardUpdateOptiona
 
 // BoardUploadCoverImageResponse represents the response from BoardService.UploadCoverImage.
 type BoardUploadCoverImageResponse struct {
-	Boards []Board `json:"boards"`
+	Boards         []Board                `json:"boards"`
+	UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 }
 
 // UploadCoverImage uploads a new cover image for an existing board.

@@ -22,13 +22,14 @@ func newLibraryService(sling *sling.Sling) *LibraryService {
 
 // Cover is a Feedly library cover.
 type Cover struct {
-	About           *string `json:"about,omitempty"`
-	Alias           *string `json:"alias,omitempty"`
-	BackgroundImage *string `json:"backgroundImage,omitempty"`
-	FullName        *string `json:"fullName,omitempty"`
-	LinkedIn        *string `json:"linkedIn,omitempty"`
-	Picture         *string `json:"picture,omitempty"`
-	Twitter         *string `json:"twitter,omitempty"`
+	About           *string                `json:"about,omitempty"`
+	Alias           *string                `json:"alias,omitempty"`
+	BackgroundImage *string                `json:"backgroundImage,omitempty"`
+	FullName        *string                `json:"fullName,omitempty"`
+	LinkedIn        *string                `json:"linkedIn,omitempty"`
+	Picture         *string                `json:"picture,omitempty"`
+	Twitter         *string                `json:"twitter,omitempty"`
+	UnmappedFields  map[string]interface{} `json:"-" mapstructure:",remain"`
 }
 
 // Library is a Feedly library.
@@ -65,7 +66,8 @@ func (s *LibraryService) AliasAvailable(alias string) (*LibraryAliasAvailableRes
 
 // LibraryCoverResponse represents the response from LibraryService.Cover.
 type LibraryCoverResponse struct {
-	Cover *Cover `json:"cover"`
+	Cover          *Cover                 `json:"cover"`
+	UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 }
 
 // Cover returns the library cover.
@@ -97,7 +99,8 @@ func (s *LibraryService) Delete() (*http.Response, error) {
 
 // LibraryDetailsResponse represents the response from LibraryService.Details.
 type LibraryDetailsResponse struct {
-	Library *Library `json:"library"`
+	Library        *Library               `json:"library"`
+	UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 }
 
 // Details returns the library details.
@@ -121,8 +124,9 @@ func (s *LibraryService) Details(alias string) (*LibraryDetailsResponse, *http.R
 // LibraryListSharedResourcesResponse represents the response from LibraryService.ListSharedResources.
 type LibraryListSharedResourcesResponse struct {
 	SharedResources map[string]struct {
-		Scope  *string `json:"scope,omitempty"`
-		Target *string `json:"target,omitempty"`
+		Scope          *string                `json:"scope,omitempty"`
+		Target         *string                `json:"target,omitempty"`
+		UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 	} `json:"sharedResources,omitempty"`
 	UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 }
@@ -171,7 +175,8 @@ func (s *LibraryService) UnshareResource(collectionID string) (*http.Response, e
 
 // LibraryUpdateCoverResponse represents the response from LibraryService.UpdateCover.
 type LibraryUpdateCoverResponse struct {
-	Cover *Cover `json:"cover"`
+	Cover          *Cover                 `json:"cover"`
+	UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 }
 
 // UpdateCover updates the library cover.

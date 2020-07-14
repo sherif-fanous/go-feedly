@@ -79,7 +79,8 @@ type Feed struct {
 
 // FeedMetadataResponse represents the response from FeedService.Metadata.
 type FeedMetadataResponse struct {
-	Feed *Feed `json:"feed"`
+	Feed           *Feed                  `json:"feed"`
+	UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 }
 
 // Metadata returns the metadata for a single feed.
@@ -102,7 +103,8 @@ func (s *FeedService) Metadata(feedID string) (*FeedMetadataResponse, *http.Resp
 
 // FeedMultipleMetadataResponse represents the response from FeedService.MultipleMetadata.
 type FeedMultipleMetadataResponse struct {
-	Feeds []Feed `json:"feeds"`
+	Feeds          []Feed                 `json:"feeds"`
+	UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 }
 
 // MultipleMetadata returns the metadata for a list of feeds.

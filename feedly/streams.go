@@ -60,7 +60,8 @@ type StreamContentOptionalParams struct {
 
 // StreamContentResponse represents the response from StreamService.Content.
 type StreamContentResponse struct {
-	Stream *Stream `json:"stream"`
+	Stream         *Stream                `json:"stream"`
+	UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 }
 
 // Content returns the content of a stream.

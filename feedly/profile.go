@@ -46,10 +46,11 @@ type Profile struct {
 	Locale              *string    `json:"locale,omitempty"`
 	Login               *string    `json:"login,omitempty"`
 	Logins              []struct {
-		ID         *string `json:"id,omitempty"`
-		Provider   *string `json:"provider,omitempty"`
-		ProviderID *string `json:"providerId,omitempty"`
-		Verified   *bool   `json:"verified,omitempty"`
+		ID             *string                `json:"id,omitempty"`
+		Provider       *string                `json:"provider,omitempty"`
+		ProviderID     *string                `json:"providerId,omitempty"`
+		Verified       *bool                  `json:"verified,omitempty"`
+		UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 	} `json:"logins,omitempty"`
 	Picture              *string                `json:"picture,omitempty"`
 	PocketConnected      *bool                  `json:"pocketConnected,omitempty"`
@@ -68,7 +69,8 @@ type Profile struct {
 
 // ProfileListResponse represents the response from ProfileService.List.
 type ProfileListResponse struct {
-	Profile *Profile `json:"profile"`
+	Profile        *Profile               `json:"profile"`
+	UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 }
 
 // List returns the profile of the user.

@@ -1,5 +1,10 @@
 # Changes
 
+## v0.2.5
+
+- Add CreatedBy field to Entry struct.
+- Ensure UnmappedFields field is added to all possible response structs.
+
 ## v0.2.4
 
 - Add AppledConnected field to Profile struct.

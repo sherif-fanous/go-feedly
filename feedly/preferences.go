@@ -20,7 +20,8 @@ func newPreferenceService(sling *sling.Sling) *PreferenceService {
 
 // PreferenceListResponse represents the response from PreferenceService.List.
 type PreferenceListResponse struct {
-	Preferences map[string]string `json:"preferences"`
+	Preferences    map[string]string      `json:"preferences"`
+	UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 }
 
 // List returns the application specific preferences.

@@ -31,10 +31,11 @@ type Entry struct {
 	} `json:"alternate,omitempty"`
 	AMPURL                 *string `json:"ampUrl,omitempty"`
 	AnalysisFeedbackPrompt *struct {
-		Confidence *float64 `json:"confidence,omitempty"`
-		ID         *string  `json:"id,omitempty"`
-		Label      *string  `json:"label,omitempty"`
-		Type       *string  `json:"type,omitempty"`
+		Confidence     *float64               `json:"confidence,omitempty"`
+		ID             *string                `json:"id,omitempty"`
+		Label          *string                `json:"label,omitempty"`
+		Type           *string                `json:"type,omitempty"`
+		UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 	} `json:"analysisFeedbackPrompt,omitempty"`
 	Author    *string `json:"author,omitempty"`
 	CDNAmpURL *string `json:"cdnAmpUrl,omitempty"`
@@ -59,9 +60,16 @@ type Entry struct {
 	} `json:"content,omitempty"`
 	Crawled *time.Time `json:"crawled,omitempty"`
 	Created *struct {
-		Application *string `json:"application,omitempty"`
-		UserAgent   *string `json:"userAgent,omitempty"`
+		Application    *string                `json:"application,omitempty"`
+		UserAgent      *string                `json:"userAgent,omitempty"`
+		UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 	} `json:"created,omitempty"`
+	CreatedBy *struct {
+		Application    *string                `json:"application,omitempty"`
+		Client         *string                `json:"client,omitempty"`
+		UserAgent      *string                `json:"userAgent,omitempty"`
+		UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
+	} `json:"createdBy,omitempty"`
 	Enclosure []struct {
 		HRef           *string                `json:"href,omitempty"`
 		Height         *int                   `json:"height,omitempty"`
@@ -148,7 +156,8 @@ type Entry struct {
 
 // EntryContentResponse represents the response from EntryService.Content.
 type EntryContentResponse struct {
-	Entries []Entry `json:"entries"`
+	Entries        []Entry                `json:"entries"`
+	UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 }
 
 // Content returns the content of an entry.
@@ -171,7 +180,8 @@ func (s *EntryService) Content(entryID string) (*EntryContentResponse, *http.Res
 
 // EntryCreateResponse represents the response from EntryService.Create.
 type EntryCreateResponse struct {
-	EntryIDs []string `json:"entryIds"`
+	EntryIDs       []string               `json:"entryIds"`
+	UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 }
 
 // Create creates and tags an entry.
@@ -189,7 +199,8 @@ func (s *EntryService) Create(entry *Entry) (*EntryCreateResponse, *http.Respons
 
 // EntryMultipleContentResponse represents the response from EntryService.MultipleContent.
 type EntryMultipleContentResponse struct {
-	Entries []Entry `json:"entries"`
+	Entries        []Entry                `json:"entries"`
+	UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 }
 
 // MultipleContent returns the content for one or more entries.

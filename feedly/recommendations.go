@@ -47,7 +47,8 @@ type RecommendationTopicOptionalParams struct {
 
 // RecommendationTopicResponse represents the response from RecommendationService.Topic.
 type RecommendationTopicResponse struct {
-	Topics []Topic `json:"topics"`
+	Topics         []Topic                `json:"topics"`
+	UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 }
 
 // Topic returns recommended feeds.

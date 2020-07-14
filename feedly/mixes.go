@@ -33,7 +33,8 @@ type MixMostEngagingOptionalParams struct {
 
 // MixMostEngagingResponse represents the response from MixService.MostEngaging.
 type MixMostEngagingResponse struct {
-	Stream *Stream `json:"stream"`
+	Stream         *Stream                `json:"stream"`
+	UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 }
 
 // MostEngaging returns a mix of the most engaging content available in a stream.
