@@ -88,7 +88,7 @@ type SearchFeedsResponse struct {
 	UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 }
 
-// Topic returns matching feeds.
+// Feeds returns matching feeds.
 func (s *SearchService) Feeds(query string, optionalParams *SearchFeedsOptionalParams) (*SearchFeedsResponse, *http.Response, error) {
 	if optionalParams == nil {
 		optionalParams = &SearchFeedsOptionalParams{}

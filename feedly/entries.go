@@ -26,6 +26,7 @@ type Entry struct {
 	ActionTimestamp *time.Time `json:"actionTimestamp,omitempty"`
 	Alternate       []struct {
 		HRef           *string                `json:"href,omitempty"`
+		Title          *string                `json:"title,omitempty"`
 		Type           *string                `json:"type,omitempty"`
 		UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 	} `json:"alternate,omitempty"`

@@ -1,5 +1,9 @@
 # Changes
 
+## v0.2.6
+
+- Add Title field to Entry.Alternate struct.
+
 ## v0.2.5
 
 - Add CreatedBy field to Entry struct.
