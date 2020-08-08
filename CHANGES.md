@@ -1,5 +1,10 @@
 # Changes
 
+## v0.2.7
+
+- Migrate from Goland to VSCode
+- Add Title field to Entry.Enclosure struct.
+
 ## v0.2.6
 
 - Add Title field to Entry.Alternate struct.

@@ -75,6 +75,7 @@ type Entry struct {
 		HRef           *string                `json:"href,omitempty"`
 		Height         *int                   `json:"height,omitempty"`
 		Length         *int                   `json:"Length,omitempty"`
+		Title          *string                `json:"title,omitempty"`
 		Type           *string                `json:"type,omitempty"`
 		Width          *int                   `json:"width,omitempty"`
 		UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
