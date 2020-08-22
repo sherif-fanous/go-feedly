@@ -141,6 +141,9 @@ type Entry struct {
 	} `json:"visual,omitempty"`
 	Webfeeds *struct {
 		AccentColor     *string                `json:"accentColor,omitempty"`
+		ADPlatform      *string                `json:"adPlatform,omitempty"`
+		ADPosition      *string                `json:"adPosition,omitempty"`
+		ADSlotID        *string                `json:"adSlotId,omitempty"`
 		AnalyticsEngine *string                `json:"analyticsEngine,omitempty"`
 		AnalyticsID     *string                `json:"analyticsId,omitempty"`
 		CoverImage      *string                `json:"coverImage,omitempty"`

@@ -1,5 +1,9 @@
 # Changes
 
+## v0.2.8
+
+- Add ADPlatform, ADPosition, and ADSlotID fields to Entry.Webfeeds struct.
+
 ## v0.2.7
 
 - Migrate from Goland to VSCode
