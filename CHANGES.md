@@ -1,5 +1,9 @@
 # Changes
 
+## v0.2.9
+
+- Add Title field to Entry.Canonical struct.
+
 ## v0.2.8
 
 - Add ADPlatform, ADPosition, and ADSlotID fields to Entry.Webfeeds struct.

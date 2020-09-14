@@ -42,6 +42,7 @@ type Entry struct {
 	CDNAmpURL *string `json:"cdnAmpUrl,omitempty"`
 	Canonical []struct {
 		HRef           *string                `json:"href,omitempty"`
+		Title          *string                `json:"title,omitempty"`
 		Type           *string                `json:"type,omitempty"`
 		UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 	} `json:"canonical,omitempty"`
