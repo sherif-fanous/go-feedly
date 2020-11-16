@@ -1,5 +1,9 @@
 # Changes
 
+## v0.3.0
+
+- Add Featured field to Entry.Meme struct.
+
 ## v0.2.9
 
 - Add Title field to Entry.Canonical struct.

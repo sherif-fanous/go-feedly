@@ -98,6 +98,7 @@ type Entry struct {
 	Keywords    []string `json:"keywords,omitempty"`
 	Language    *string  `json:"language,omitempty"`
 	Memes       []struct {
+		Featured       *bool                  `json:"featured,omitempty"`
 		ID             *string                `json:"id,omitempty"`
 		Label          *string                `json:"label,omitempty"`
 		Score          *float64               `json:"score,omitempty"`
