@@ -22,6 +22,15 @@ func newProfileService(sling *sling.Sling) *ProfileService {
 
 // Profile is a Feedly user profile.
 type Profile struct {
+	AccountLimits *struct {
+		MaxAlerts      *int                   `json:"maxAlerts,omitempty"`
+		MaxEmailFeeds  *int                   `json:"maxEmailFeeds,omitempty"`
+		MaxFeeds       *int                   `json:"maxFeeds,omitempty"`
+		MaxLeoFeeds    *int                   `json:"maxLeoFeeds,omitempty"`
+		MaxMuteFilters *int                   `json:"maxMuteFilters,omitempty"`
+		MaxPriorities  *int                   `json:"maxPriorities,omitempty"`
+		UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
+	}
 	AnonymizedHash      *string    `json:"anonymizedHash,omitempty"`
 	AppleConnected      *bool      `json:"appleConnected,omitempty"`
 	Client              *string    `json:"client,omitempty"`
@@ -46,6 +55,7 @@ type Profile struct {
 	Locale              *string    `json:"locale,omitempty"`
 	Login               *string    `json:"login,omitempty"`
 	Logins              []struct {
+		Deleted        *bool                  `json:"deleted,omitempty"`
 		ID             *string                `json:"id,omitempty"`
 		Provider       *string                `json:"provider,omitempty"`
 		ProviderID     *string                `json:"providerId,omitempty"`
