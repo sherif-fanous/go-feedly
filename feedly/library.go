@@ -121,6 +121,31 @@ func (s *LibraryService) Details(alias string) (*LibraryDetailsResponse, *http.R
 	return decodedResponse, resp, nil
 }
 
+// LibraryLeoIndustriesResponse represents the response from LibraryService.LeoIndustries.
+type LibraryLeoIndustriesResponse struct {
+	Cover          *Cover                 `json:"cover"`
+	Collections    []Collection           `json:"collections"`
+	UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
+}
+
+// LeoIndustries returns the Leo industries.
+func (s *LibraryService) LeoIndustries() (*LibraryLeoIndustriesResponse, *http.Response, error) {
+	encodedResponse := make(map[string]interface{})
+	decodedResponse := new(LibraryLeoIndustriesResponse)
+	apiError := new(APIError)
+
+	resp, err := s.sling.New().Get("library/leoIndustries").Receive(&encodedResponse, apiError)
+	if err := relevantError(err, apiError); err != nil {
+		return nil, resp, err
+	}
+
+	if err := mapstructure.Decode(encodedResponse, decodedResponse); err != nil {
+		return nil, resp, err
+	}
+
+	return decodedResponse, resp, nil
+}
+
 // LibraryListSharedResourcesResponse represents the response from LibraryService.ListSharedResources.
 type LibraryListSharedResourcesResponse struct {
 	SharedResources map[string]struct {
