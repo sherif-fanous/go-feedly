@@ -114,40 +114,40 @@ var topics = [...]string{
 }
 
 func prepareTestData() {
-	rand.Shuffle(len(topics), func(i int, j int) {
-		topics[i], topics[j] = topics[j], topics[i]
+	leoIndustriesResponse, _, err := client.Library.LeoIndustries()
+	if err != nil {
+		fmt.Printf("feedly_test: prepareTestData: %v\n", err)
+
+		os.Exit(1)
+	}
+
+	rand.Shuffle(len(leoIndustriesResponse.Collections), func(i int, j int) {
+		leoIndustriesResponse.Collections[i], leoIndustriesResponse.Collections[j] = leoIndustriesResponse.Collections[j], leoIndustriesResponse.Collections[i]
 	})
 
 	numberOfCollectionsAdded := 0
 
-	for i := 0; i < len(topics); i++ {
-		topicLabel := topics[i]
+	for i := 0; i < len(leoIndustriesResponse.Collections); i++ {
+		collection := leoIndustriesResponse.Collections[i]
 
-		topicResponse, _, err := client.Recommendations.Topic(topicLabel, "en", nil)
-		if err != nil {
-			fmt.Printf("feedly_test: prepareTestData: %v\n", err)
-
-			os.Exit(1)
-		}
-
-		if len(topicResponse.Topics) > 0 && len(topicResponse.Topics[0].RecommendedFeeds) >= 3*numberOfFeeds {
+		if len(collection.Feeds) >= numberOfFeeds {
 			numberOfCollectionsAdded++
 
-			rand.Shuffle(len(topicResponse.Topics[0].RecommendedFeeds), func(i int, j int) {
-				topicResponse.Topics[0].RecommendedFeeds[i], topicResponse.Topics[0].RecommendedFeeds[j] = topicResponse.Topics[0].RecommendedFeeds[j], topicResponse.Topics[0].RecommendedFeeds[i]
+			rand.Shuffle(len(collection.Feeds), func(i int, j int) {
+				collection.Feeds[i], collection.Feeds[j] = collection.Feeds[j], collection.Feeds[i]
 			})
 
-			controlBoards[topicLabel] = &feedly.Board{
-				Label: &topicLabel,
+			controlBoards[collection.Topics[0]] = &feedly.Board{
+				Label: &collection.Topics[0],
 			}
 
-			controlCollections[topicLabel] = &feedly.Collection{
-				Label: &topicLabel,
-				Feeds: topicResponse.Topics[0].RecommendedFeeds,
+			controlCollections[collection.Topics[0]] = &feedly.Collection{
+				Label: &collection.Topics[0],
+				Feeds: collection.Feeds,
 			}
 
-			controlBoardNames = append(controlBoardNames, topicLabel)
-			controlCollectionNames = append(controlCollectionNames, topicLabel)
+			controlBoardNames = append(controlBoardNames, collection.Topics[0])
+			controlCollectionNames = append(controlCollectionNames, collection.Topics[0])
 		}
 
 		sleep()
