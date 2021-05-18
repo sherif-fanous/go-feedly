@@ -1,5 +1,12 @@
 # Changes
 
+## v0.3.1
+
+- Add AccountLimits struct to Profile struct.
+- Add Deleted field to Profile.Logins struct.
+- Add LeoIndustries method to LibraryService struct.
+- Fix test suite.
+
 ## v0.3.0
 
 - Add Featured field to Entry.Meme struct.
