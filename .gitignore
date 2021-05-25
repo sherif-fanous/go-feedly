@@ -1,3 +1,4 @@
+.devcontainer/
 .vscode/
 go-feedly.code-workspace
 testdata/OAuth2Token.json
