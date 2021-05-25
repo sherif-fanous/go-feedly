@@ -2,7 +2,7 @@ language: go
 go:
   - "1.14.x"
 script:
-  - go test -v github.com/sfanous/go-feedly/feedly -args -collections 5 -cover "../testdata/covers/cover.gif" -cover "../testdata/covers/cover.jpg" -cover "../testdata/covers/cover.png" -feeds 2
+  - go test -v github.com/sfanous/go-feedly/feedly -args -collections 5 -cover "../testdata/covers/cover.gif" -cover "../testdata/covers/cover.jpg" -cover "../testdata/covers/cover.png" -feeds 1
 notifications:
   email:
     on_failure: always
