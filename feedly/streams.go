@@ -42,6 +42,7 @@ type Stream struct {
 	Items          []Entry                `json:"items,omitempty"`
 	Title          *string                `json:"title,omitempty"`
 	Updated        *time.Time             `json:"updated,omitempty"`
+	Velocity       *float64               `json:"velocity,omitempty"`
 	UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 }
 
