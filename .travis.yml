@@ -6,4 +6,4 @@ script:
 notifications:
   email:
     on_failure: always
-    on_success: never
+    on_success: always
