@@ -1,5 +1,9 @@
 # Changes
 
+## v0.3.3
+
+- Add SearchTerms field to Entry struct.
+
 ## v0.3.2
 
 - Add Velocity field to Stream struct.

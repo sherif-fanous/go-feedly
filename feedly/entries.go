@@ -110,12 +110,16 @@ type Entry struct {
 		Title          *string                `json:"title,omitempty"`
 		UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 	} `json:"origin,omitempty"`
-	OriginID   *string                  `json:"originId,omitempty"`
-	Priorities []map[string]interface{} `json:"priorities,omitempty"`
-	Published  *time.Time               `json:"published,omitempty"`
-	Recrawled  *time.Time               `json:"recrawled,omitempty"`
-	SID        *string                  `json:"sid,omitempty"`
-	Summary    *struct {
+	OriginID    *string                  `json:"originId,omitempty"`
+	Priorities  []map[string]interface{} `json:"priorities,omitempty"`
+	Published   *time.Time               `json:"published,omitempty"`
+	Recrawled   *time.Time               `json:"recrawled,omitempty"`
+	SID         *string                  `json:"sid,omitempty"`
+	SearchTerms *struct {
+		Parts          []string               `json:"parts,omitempty"`
+		UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
+	} `json:"searchTerms,omitempty"`
+	Summary *struct {
 		Content        *string                `json:"content,omitempty"`
 		Direction      *string                `json:"direction,omitempty"`
 		UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
