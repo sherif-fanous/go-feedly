@@ -116,8 +116,9 @@ type Entry struct {
 	Recrawled   *time.Time               `json:"recrawled,omitempty"`
 	SID         *string                  `json:"sid,omitempty"`
 	SearchTerms *struct {
-		Parts          []string               `json:"parts,omitempty"`
-		UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
+		IsComplexFilter *bool                  `json:"isComplexFilter,omitempty"`
+		Parts           []string               `json:"parts,omitempty"`
+		UnmappedFields  map[string]interface{} `json:"-" mapstructure:",remain"`
 	} `json:"searchTerms,omitempty"`
 	Summary *struct {
 		Content        *string                `json:"content,omitempty"`
