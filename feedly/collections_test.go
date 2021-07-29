@@ -32,9 +32,9 @@ func testCollectionServiceAddFeed(t *testing.T, collection *feedly.Collection) {
 		assert.IsType(t, &feedly.CollectionAddFeedResponse{}, addFeedResponse)
 		assert.Equal(t, expectedNumberOfFeeds, len(addFeedResponse.Feeds))
 
-		responseCollections[strings.ToLower(*collection.Label)].Feeds = addFeedResponse.Feeds
-
+		controlCollectionNamesAddedFeeds[strings.ToLower(*collection.Label)] = append(controlCollectionNamesAddedFeeds[strings.ToLower(*collection.Label)], controlCollection.Feeds[0])
 		controlCollection.Feeds = append(controlCollection.Feeds[1:], controlCollection.Feeds[0])
+		responseCollections[strings.ToLower(*collection.Label)].Feeds = addFeedResponse.Feeds
 
 		testUnmappedFields(t, addFeedResponse, "CollectionAddFeedResponse")
 
@@ -69,6 +69,7 @@ func testCollectionServiceAddMultipleFeeds(t *testing.T, collection *feedly.Coll
 		assert.IsType(t, &feedly.CollectionAddMultipleFeedsResponse{}, addMultipleFeedsResponse)
 		assert.Equal(t, expectedNumberOfFeeds, len(addMultipleFeedsResponse.Feeds))
 
+		controlCollectionNamesAddedFeeds[strings.ToLower(*collection.Label)] = append(controlCollectionNamesAddedFeeds[strings.ToLower(*collection.Label)], controlCollection.Feeds[:numberOfFeedsToAdd]...)
 		responseCollections[strings.ToLower(*collection.Label)].Feeds = addMultipleFeedsResponse.Feeds
 
 		testUnmappedFields(t, addMultipleFeedsResponse, "CollectionAddMultipleFeedsResponse")
@@ -105,6 +106,7 @@ func testCollectionServiceCreate(t *testing.T, collection *feedly.Collection) {
 		assert.Equal(t, strings.ToLower(*collection.Label), *createResponse.Collections[0].Label)
 		assert.Equal(t, numberOfFeeds, len(createResponse.Collections[0].Feeds))
 
+		controlCollectionNamesAddedFeeds[strings.ToLower(*collection.Label)] = append(controlCollectionNamesAddedFeeds[strings.ToLower(*collection.Label)], controlCollection.Feeds[:numberOfFeeds]...)
 		controlCollection.Feeds = append(controlCollection.Feeds[numberOfFeeds:], controlCollection.Feeds[:numberOfFeeds]...)
 		responseCollections[strings.ToLower(*createResponse.Collections[0].Label)] = &createResponse.Collections[0]
 
@@ -134,9 +136,18 @@ func testCollectionServiceDelete(t *testing.T, collection *feedly.Collection) {
 }
 
 func testCollectionServiceDeleteFeed(t *testing.T, collection *feedly.Collection) {
-	resp, err := client.Collections.DeleteFeed(*collection.ID, *collection.Feeds[rand.Intn(len(collection.Feeds))].ID, nil)
+	feedToDelete := collection.Feeds[rand.Intn(len(collection.Feeds))]
+
+	resp, err := client.Collections.DeleteFeed(*collection.ID, *feedToDelete.ID, nil)
 	if err != nil {
 		t.Errorf("%v", err)
+	}
+
+	for i, feed := range controlCollectionNamesAddedFeeds[strings.ToLower(*collection.Label)] {
+		if *feed.ID == *feedToDelete.ID {
+			controlCollectionNamesAddedFeeds[strings.ToLower(*collection.Label)] = append(controlCollectionNamesAddedFeeds[strings.ToLower(*collection.Label)][:i], controlCollectionNamesAddedFeeds[strings.ToLower(*collection.Label)][i+1:]...)
+			break
+		}
 	}
 
 	assert.Nil(t, err)
@@ -146,15 +157,24 @@ func testCollectionServiceDeleteFeed(t *testing.T, collection *feedly.Collection
 func testCollectionServiceDeleteMultipleFeeds(t *testing.T, collection *feedly.Collection) {
 	numberOfFeedsToDelete := rand.Intn(numberOfFeeds) + 1
 
-	feedsToDelete := make([]string, 0, numberOfFeedsToDelete)
+	feedIDsToDelete := make([]string, 0, numberOfFeedsToDelete)
 
 	for i := 0; i < numberOfFeedsToDelete; i++ {
-		feedsToDelete = append(feedsToDelete, *collection.Feeds[i].ID)
+		feedIDsToDelete = append(feedIDsToDelete, *collection.Feeds[i].ID)
 	}
 
-	resp, err := client.Collections.DeleteMultipleFeeds(*collection.ID, feedsToDelete, nil)
+	resp, err := client.Collections.DeleteMultipleFeeds(*collection.ID, feedIDsToDelete, nil)
 	if err != nil {
 		t.Errorf("%v", err)
+	}
+
+	for _, feedIDToDelete := range feedIDsToDelete {
+		for i, feed := range controlCollectionNamesAddedFeeds[strings.ToLower(*collection.Label)] {
+			if feedIDToDelete == *feed.ID {
+				controlCollectionNamesAddedFeeds[strings.ToLower(*collection.Label)] = append(controlCollectionNamesAddedFeeds[strings.ToLower(*collection.Label)][:i], controlCollectionNamesAddedFeeds[strings.ToLower(*collection.Label)][i+1:]...)
+				break
+			}
+		}
 	}
 
 	assert.Nil(t, err)
@@ -249,6 +269,7 @@ func testCollectionServiceUpdate(t *testing.T, collection *feedly.Collection) {
 		assert.Equal(t, strings.ToUpper(*collection.Label), *updateResponse.Collections[0].Label)
 		assert.Equal(t, numberOfFeeds*2, len(updateResponse.Collections[0].Feeds))
 
+		controlCollectionNamesAddedFeeds[strings.ToLower(*collection.Label)] = append(controlCollectionNamesAddedFeeds[strings.ToLower(*collection.Label)], controlCollection.Feeds[:numberOfFeeds]...)
 		controlCollection.Feeds = append(controlCollection.Feeds[numberOfFeeds:], controlCollection.Feeds[:numberOfFeeds]...)
 		responseCollections[strings.ToLower(*updateResponse.Collections[0].Label)] = &updateResponse.Collections[0]
 

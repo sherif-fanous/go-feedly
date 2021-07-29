@@ -38,6 +38,7 @@ var controlBoards = make(map[string]*feedly.Board)
 var controlCollections = make(map[string]*feedly.Collection)
 var controlBoardNames = make([]string, 0)
 var controlCollectionNames = make([]string, 0)
+var controlCollectionNamesAddedFeeds = make(map[string][]feedly.Feed)
 var coverImages stringSliceFlags
 var doLog bool
 var entriesToMark []feedly.Entry
@@ -53,65 +54,7 @@ var profile *feedly.Profile
 var responseBoards = make(map[string]*feedly.Board)
 var responseCollections = make(map[string]*feedly.Collection)
 var responseStreams = make(map[string]map[string]*feedly.Stream)
-var topics = [...]string{
-	"advertising",
-	"agriculture",
-	"ai",
-	"animals",
-	"automotive",
-	"aviation",
-	"business",
-	"comics",
-	"construction",
-	"content marketing",
-	"crafts",
-	"creativity",
-	"cryptocurrency",
-	"culture",
-	"data science",
-	"dating",
-	"design",
-	"economics",
-	"education",
-	"energy",
-	"entrepreneurship",
-	"finance",
-	"food",
-	"gaming",
-	"gardening",
-	"healthcare",
-	"hospitality",
-	"investing",
-	"iot",
-	"landscape",
-	"leadership",
-	"management",
-	"manufacturing",
-	"marketing",
-	"media",
-	"medical devices",
-	"movies",
-	"music",
-	"nature",
-	"news",
-	"oil",
-	"pharma",
-	"photography",
-	"politics",
-	"programming",
-	"real estate",
-	"relationships",
-	"retail",
-	"science",
-	"security",
-	"seo",
-	"sports",
-	"tech",
-	"telecom",
-	"travel",
-	"vr",
-	"writing",
-}
+var topics = []string{}
 
 func prepareTestData() {
 	leoIndustriesResponse, _, err := client.Library.LeoIndustries()
@@ -125,36 +68,40 @@ func prepareTestData() {
 		leoIndustriesResponse.Collections[i], leoIndustriesResponse.Collections[j] = leoIndustriesResponse.Collections[j], leoIndustriesResponse.Collections[i]
 	})
 
+	uniqueTopics := make(map[string]struct{})
 	numberOfCollectionsAdded := 0
 
 	for i := 0; i < len(leoIndustriesResponse.Collections); i++ {
 		collection := leoIndustriesResponse.Collections[i]
 
-		if len(collection.Feeds) >= numberOfFeeds {
+		if len(collection.Feeds) >= numberOfFeeds && numberOfCollectionsAdded < numberOfCollections {
 			numberOfCollectionsAdded++
 
 			rand.Shuffle(len(collection.Feeds), func(i int, j int) {
 				collection.Feeds[i], collection.Feeds[j] = collection.Feeds[j], collection.Feeds[i]
 			})
 
-			controlBoards[collection.Topics[0]] = &feedly.Board{
-				Label: &collection.Topics[0],
+			controlBoards[strings.ToLower(*collection.Label)] = &feedly.Board{
+				Label: collection.Label,
 			}
 
-			controlCollections[collection.Topics[0]] = &feedly.Collection{
-				Label: &collection.Topics[0],
+			controlCollections[strings.ToLower(*collection.Label)] = &feedly.Collection{
+				Label: collection.Label,
 				Feeds: collection.Feeds,
 			}
 
-			controlBoardNames = append(controlBoardNames, collection.Topics[0])
-			controlCollectionNames = append(controlCollectionNames, collection.Topics[0])
+			controlBoardNames = append(controlBoardNames, strings.ToLower(*collection.Label))
+			controlCollectionNames = append(controlCollectionNames, strings.ToLower(*collection.Label))
+			controlCollectionNamesAddedFeeds[strings.ToLower(*collection.Label)] = make([]feedly.Feed, 0)
 		}
 
-		sleep()
-
-		if numberOfCollectionsAdded == numberOfCollections {
-			break
+		for _, topic := range collection.Topics {
+			uniqueTopics[topic] = struct{}{}
 		}
+	}
+
+	for topic := range uniqueTopics {
+		topics = append(topics, topic)
 	}
 
 	responseStreams["board"] = make(map[string]*feedly.Stream)
@@ -400,7 +347,7 @@ func TestFeedly(t *testing.T) {
 		entryIDs := make([]string, 0)
 		randomizedEntryIndexes := rand.Perm(len(collectionStreamedEntries))
 
-		for i := 0; i < rand.Intn(len(collectionStreamedEntries)-3)+3; i++ {
+		for i := 0; i < rand.Intn(len(collectionStreamedEntries)-(len(collectionStreamedEntries)/2))+(len(collectionStreamedEntries)/2); i++ {
 			entryIDs = append(entryIDs, *collectionStreamedEntries[randomizedEntryIndexes[i]].ID)
 		}
 
@@ -526,7 +473,7 @@ func TestFeedly(t *testing.T) {
 	})
 	sleep()
 
-	numberOfCollectionsToMark := rand.Intn(len(controlCollectionNames)-1) + 1
+	numberOfCollectionsToMark := rand.Intn(len(controlCollectionNames)-(len(controlCollectionNames)/2)) + (len(controlCollectionNames) / 2)
 	collectionsToMark = make([]*feedly.Collection, 0, numberOfCollectionsToMark)
 	randomizedCollectionNamesIndexes := rand.Perm(len(controlCollectionNames))
 
@@ -534,10 +481,10 @@ func TestFeedly(t *testing.T) {
 		collectionsToMark = append(collectionsToMark, responseCollections[controlCollectionNames[randomizedCollectionNamesIndexes[i]]])
 	}
 
-	numberOfFeedsToMark := rand.Intn(len(collectionsToMark[0].Feeds))
-	feedsToMark = collectionsToMark[0].Feeds[0:numberOfFeedsToMark]
+	numberOfFeedsToMark := rand.Intn(len(controlCollectionNamesAddedFeeds[strings.ToLower(*collectionsToMark[0].Label)])-(len(controlCollectionNamesAddedFeeds[strings.ToLower(*collectionsToMark[0].Label)])/2)) + (len(controlCollectionNamesAddedFeeds[strings.ToLower(*collectionsToMark[0].Label)]) / 2)
+	feedsToMark = controlCollectionNamesAddedFeeds[strings.ToLower(*collectionsToMark[0].Label)][0:numberOfFeedsToMark]
 
-	numberOfEntriesToMark := rand.Intn(len(responseStreams["collection"][*responseCollections[controlCollectionNames[randomizedCollectionNamesIndexes[0]]].ID].Items)-1) + 1
+	numberOfEntriesToMark := rand.Intn(len(responseStreams["collection"][*responseCollections[controlCollectionNames[randomizedCollectionNamesIndexes[0]]].ID].Items)-(len(responseStreams["collection"][*responseCollections[controlCollectionNames[randomizedCollectionNamesIndexes[0]]].ID].Items)/2)) + (len(responseStreams["collection"][*responseCollections[controlCollectionNames[randomizedCollectionNamesIndexes[0]]].ID].Items) / 2)
 	entriesToMark = responseStreams["collection"][*responseCollections[controlCollectionNames[randomizedCollectionNamesIndexes[0]]].ID].Items[0:numberOfEntriesToMark]
 
 	t.Run("MarkerServiceUnreadCounts", func(t *testing.T) {

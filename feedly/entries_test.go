@@ -40,7 +40,7 @@ func testEntryServiceMultipleContent(t *testing.T) {
 	entryIDs := make([]string, 0)
 	entries := responseStreams["collection"][*responseCollections[controlCollectionNames[rand.Intn(len(controlCollectionNames))]].ID].Items
 
-	for i := 0; i < rand.Intn(len(entries)-5)+5; i++ {
+	for i := 0; i < rand.Intn(len(entries)-(len(entries)/2))+(len(entries)/2); i++ {
 		entryIDs = append(entryIDs, *entries[i].ID)
 	}
 
