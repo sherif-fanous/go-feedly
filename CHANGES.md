@@ -1,5 +1,10 @@
 # Changes
 
+## v0.3.4
+
+- Add IsComplexFilter field to Entry.SearchTerms struct.
+- Fix test suite.
+
 ## v0.3.3
 
 - Add SearchTerms field to Entry struct.
