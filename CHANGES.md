@@ -1,5 +1,10 @@
 # Changes
 
+## v0.3.5
+
+- Add AuthorDetails field to  struct.
+- Fix [issue](https://github.com/sherif-fanous/go-feedly/issues/1).
+
 ## v0.3.4
 
 - Add IsComplexFilter field to Entry.SearchTerms struct.

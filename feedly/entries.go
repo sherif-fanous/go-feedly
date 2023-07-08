@@ -38,7 +38,13 @@ type Entry struct {
 		Type           *string                `json:"type,omitempty"`
 		UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
 	} `json:"analysisFeedbackPrompt,omitempty"`
-	Author    *string `json:"author,omitempty"`
+	Author        *string `json:"author,omitempty"`
+	AuthorDetails *struct {
+		Source         *string                `json:"source,omitempty"`
+		URL            *string                `json:"url,omitempty"`
+		Username       *string                `json:"username,omitempty"`
+		UnmappedFields map[string]interface{} `json:"-" mapstructure:",remain"`
+	} `json:"authorDetails,omitempty"`
 	CDNAmpURL *string `json:"cdnAmpUrl,omitempty"`
 	Canonical []struct {
 		HRef           *string                `json:"href,omitempty"`

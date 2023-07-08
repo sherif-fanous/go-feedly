@@ -48,7 +48,7 @@ type Stream struct {
 
 // StreamContentOptionalParams are the optional parameters for StreamService.Content.
 type StreamContentOptionalParams struct {
-	Continuation      *string      `url:"count,omitempty"`
+	Continuation      *string      `url:"continuation,omitempty"`
 	Count             *int         `url:"count,omitempty"`
 	FindURLDuplicates *bool        `url:"findUrlDuplicates,omitempty"`
 	ImportantOnly     *bool        `url:"importantOnly,omitempty"`
@@ -89,7 +89,7 @@ func (s *StreamService) Content(streamID string, optionalParams *StreamContentOp
 
 // StreamEntryIDsOptionalParams are the optional parameters for StreamService.EntryIDs.
 type StreamEntryIDsOptionalParams struct {
-	Continuation *string      `url:"count,omitempty"`
+	Continuation *string      `url:"continuation,omitempty"`
 	Count        *int         `url:"count,omitempty"`
 	NewerThan    *time.Time   `url:"newerThan,omitempty"`
 	Ranked       *ContentRank `url:"ranked,omitempty"`
