@@ -1,5 +1,8 @@
 # Changes
 
+## v0.3.6
+- Update dependencies
+
 ## v0.3.5
 
 - Add AuthorDetails field to  struct.
